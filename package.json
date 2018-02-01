@@ -1,0 +1,40 @@
+{
+  "name": "hrsf87-cc-thesis",
+  "version": "1.0.0",
+  "description": "thesis project",
+  "main": ".eslintrc.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "mongodb": "filler"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chen101385/hrsf87-CC-thesis.git"
+  },
+  "keywords": [
+    "thesis",
+    "system",
+    "design",
+    "capstone",
+    "project"
+  ],
+  "author": "Christopher Chen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chen101385/hrsf87-CC-thesis/issues"
+  },
+  "homepage": "https://github.com/chen101385/hrsf87-CC-thesis#readme",
+  "dependencies": {
+    "axios": "^0.17.1",
+    "csv-writer": "0.0.3",
+    "koa": "^2.4.1",
+    "koa-body": "^2.5.0",
+    "koa-router": "^7.4.0",
+    "mongoose": "^5.0.3"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "babel-preset-env": "^1.6.1",
+    "babel-register": "^6.26.0"
+  }
+}
