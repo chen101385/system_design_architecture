@@ -16,7 +16,7 @@ const userDataGenerator = async () => {
         //loop through x # of iterations
         // let unconditionalActions = ["engage", "thumbs up", "thumbs down"];
         // let conditionalActions = ["start", "pause", "resume"]
-        let actions = ["engage", "thumbs up", "thumbs down", "start", "pause", "resume"]
+        // let actions = ["impression", "engage", "thumbs up", "thumbs down", "start", "pause", "resume"]
         //thumbs up/down boolean?
         //timestamp
         //stop > start;
@@ -30,15 +30,42 @@ const userDataGenerator = async () => {
         let records = [];
 
         for (let j = 0; j <= 20000; j++) {
-            let obj = {
-                user_id: Math.floor(Math.random() * 100000),
-                movie_id: Math.floor(Math.random() * 10000),
-                algo_id: Math.floor(Math.random() * 2),
-                action: actions[Math.floor(Math.random() * 6)],
-                x: Math.floor(Math.random() * 20) - 10,
-                y: Math.floor(Math.random() * 20) - 10,
-                timestamp: randomDate(new Date(2017, 11, 1), new Date(2018, 2, 1))
+
+            const getAction = () => {
+                let randomNumber = Math.random();
+                if (randomNumber < 0.45) {
+                    return "impression";
+                } else if (randomNumber < 0.6) {
+                    return "engage";
+                } else if (randomNumber < 0.7) {
+                    return "start";
+                } else if (randomNumber < 0.78) {
+                    return "pause";
+                } else if (randomNumber < 0.85) {
+                    return "complete";
+                } else if (randomNumber < 0.9) {
+                    return "resume";
+                } else if (randomNumber < 0.95) {
+                    return "up";
+                } else if (randomNumber < 1) {
+                    return "down";
+                }
             };
+        
+            let obj = {};
+            obj.user_id = Math.floor(Math.random() * 100000);
+            obj.movie_id = Math.floor(Math.random() * 10000);
+            obj.algo_id = Math.floor(Math.random() * 2);
+            obj.action = getAction();
+            if (obj.action === "impression") {
+                obj.x = Math.floor(Math.random() * 20) - 10;
+                obj.y = Math.floor(Math.random() * 20) - 10;
+            } else {
+                obj.x = null;
+                obj.y = null; 
+            }
+            obj.timestamp = randomDate(new Date(2017, 11, 1), new Date(2018, 2, 1));
+
             records[j] = obj;
         }
         csvWriter.writeRecords(records)
