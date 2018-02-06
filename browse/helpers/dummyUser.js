@@ -1,26 +1,14 @@
-const db = require('../database/index.js');
 const fs = require('fs');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
-//saveUserRecs; saveGlobalRecs;
 
-
-//n is number of data to add to database;
 const randomDate = (start, end) => {
     return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
 }
 
 const userDataGenerator = async () => {
 
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 10; i++) {
         let fileNum = i;
-        //loop through x # of iterations
-        // let unconditionalActions = ["engage", "thumbs up", "thumbs down"];
-        // let conditionalActions = ["start", "pause", "resume"]
-        // let actions = ["impression", "engage", "thumbs up", "thumbs down", "start", "pause", "resume"]
-        //thumbs up/down boolean?
-        //timestamp
-        //stop > start;
-        //resume > stop
 
         let csvWriter = createCsvWriter({
             path: __dirname + `/../data/dummydataset${fileNum}.csv`,
@@ -29,7 +17,7 @@ const userDataGenerator = async () => {
 
         let records = [];
 
-        for (let j = 0; j <= 20000; j++) {
+        for (let j = 0; j <= 100000; j++) {
 
             const getAction = () => {
                 let randomNumber = Math.random();
@@ -70,7 +58,6 @@ const userDataGenerator = async () => {
         }
         csvWriter.writeRecords(records)
     }
-    //{"user_id" : 123, "movie_id" : 1234, "algorithmId" : 1, "action" : "complete", "x" : 2, "y" : -5, "timestamp" : "2018-01-25TZ00:00:00:00" }
 }
 
 //in try-catch block, no data passed into next .then; job completed.
@@ -80,34 +67,4 @@ try {
     })
 } catch (err) {
     console.log(err);
-}
-
-const saveUserData = () => {
-    user_actions.collection.insert(data, (err, response) => {
-        if (err) {
-            console.log('error inserting data into DB', err);
-        } else {
-            console.log('successful entry into db');
-        }
-    })
-}
-
-const saveUserListData = () => {
-    user_lists.collection.insert(data, (err, response) => {
-        if (err) {
-            console.log('error inserting data into DB', err);
-        } else {
-            console.log('successful entry into db');
-        }
-    })
-}
-
-const saveGlobalListData = () => {
-    global_list.collection.insert(data, (err, response) => {
-        if (err) {
-            console.log('error inserting data into DB', err);
-        } else {
-            console.log('successful entry into db');
-        }
-    })
 }

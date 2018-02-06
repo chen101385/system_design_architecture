@@ -24,52 +24,12 @@ const testFunction = (description) => {
   .catch(error => console.log(error))
 }
 
-//n is number of data to add to database;
-const userDataGenerator = (n) => {
-    //loop through x # of iterations
-    let unconditionalActions = ["engage", "thumbs up", "thumbs down"];
-    let conditionalActions = ["start", "pause", "resume"]
-    //thumbs up/down boolean?
-    //timestamp
-      //stop > start;
-      //resume > stop
-    let data = [];
-
-    for (let i = 0; i < n; i++) {
-        let obj = {};
-        obj.user_id = 1;
-        obj.movie_id = 1;
-        obj.algo_id = 1;
-        obj.action = unconditionalActions[Math.floor(Math.random() * 3)];
-        obj.x = Math.floor(Math.random() * 100);
-        obj.y = Math.floor(Math.random() * 100);
-        obj.timestamp = "2018-01-25TZ00:00:00:00";
-        data.push(obj);
-    }
-
-
-
-    
-    
-      //{"user_id" : 123, "movie_id" : 1234, "algorithmId" : 1, "action" : "complete", "x" : 2, "y" : -5, "timestamp" : "2018-01-25TZ00:00:00:00" }
-}
-
-const saveUserData = () => {
-  user_actions.collection.insert(data, (err, response) => {
-      if (err) {
-          console.log('error inserting data into DB', err);
-      } else {
-          console.log('successful entry into db';
-      }
-  })
-}
-
 const saveUserListData = () => {
     user_lists.collection.insert(data, (err, response) => {
         if (err) {
             console.log('error inserting data into DB', err);
         } else {
-            console.log('successful entry into db';
+            console.log('successful entry into db');
         }
     })
 }
@@ -79,14 +39,14 @@ const saveGlobalListData = () => {
         if (err) {
             console.log('error inserting data into DB', err);
         } else {
-            console.log('successful entry into db';
+            console.log('successful entry into db');
         }
     })
 }
 
-
-
 module.exports = {
     testFunction,
-    userDataGenerator
+    saveUserActionData,
+    saveUserListData,
+    saveGlobalListData
 }
