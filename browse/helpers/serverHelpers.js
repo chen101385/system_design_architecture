@@ -22,27 +22,25 @@ const getEvent = event => {
 }
 
 const sendEvent = () => {
-    return new Promise((resolve, reject) => {
-        
-        getEvent(eventInstance);
-        let url = `http://127.0.0.1:3000/events`
-    
-        fetch(url, {
-            method: 'POST',
-            body: JSON.stringify(eventInstance),
-            headers: {
-                "Content-Type": "application/json"
-            }
+
+    getEvent(eventInstance);
+
+    let url = `http://127.0.0.1:3000/events`
+
+    fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(eventInstance),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+        .then(response => {
+            console.log('this is sendEvent response', response);
         })
-    })
-    .then(response => {
-         console.log('this is response', response);
-         resolve(response)
-    })
-    .catch(err => {
-        console.log('this is error', err)
-        reject(err); 
-})
+        .catch(err => {
+            console.log('this is sendEvent error', err)
+        })
+}
 
 const startBrowsing = async (userId) => {
     //when a user logs in, push the user's movie recommendations to the UI
@@ -96,7 +94,8 @@ const browseMore = async (userId) => {
     // serves up the package of new rec movies & metadata to the user
 }
 
-startBrowsing(13);
+// startBrowsing(13);
+// sendEvent();
 
 module.exports = {
     sendEvent,

@@ -2,14 +2,21 @@ config:
   target: 'http://127.0.0.1:3000'
   http:
     #10 minutes threshold for request timeout 
-    timeout: 600
+    timeout: 60
   phases:
+  #duration of test in SECONDS
+    - duration: 60
+      arrivalRate: 5
     - duration: 60
       arrivalRate: 10
+    - duration: 60
+      arrivalRate: 15
   defaults:
     headers:
+    #default setting from documentation, can copy directly
       x-my-service-auth: '987401838271002188298567'
 scenarios:
   - flow:
     - get:
-        url: "/startbrowsing/100"
+    #URL you choose to test; can be API or SQS, I believe.
+        url: "/startbrowsing/1"

@@ -3,8 +3,9 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const should = chai.should();
 const expect = chai.expect;
-const sqsResults = require('../browse/queue/resultQueue/receiveMsg.js')
-const sqsJobs = require('../browse/queue/jobQueue/sendMsg.js')
+const sqsResults = require('../browse/queue/resultQueue/receiveMsg.js');
+const sqsJobs = require('../browse/queue/jobQueue/sendMsg.js');
+const serverHelpers = require('../browse/helpers/serverHelpers.js');
 chai.use(chaiHttp);
 
 const homeUrl = `http://localhost:3000`
@@ -48,8 +49,7 @@ describe('koa should connect to server & have working endpoints', () => {
 
 describe('Amazon SQS Queue should work properly', () => {
   it('should retrieve a list of movie_id recommendations from results queue when polled', () => {
-    sqsResults.pollQueue((err, result) => {
-      should.not.exist(err);
+    sqsResults.pollQueue((result) => {
       should.exist(result);
       //result should be a JSON-string;
       result.should.be.an('string');
@@ -65,4 +65,19 @@ describe('Amazon SQS Queue should work properly', () => {
   })
 })
 
-describe('Should be creating user interactions and passing them to the ')
+// describe('Should be generating user interactions and passing them along to the events service', () => {
+//   it('')
+// })
+
+describe("routes: index", () => {
+  it("/ endpoint should work properly", done => {
+    chai
+      .request(homeUrl)
+      .get('/')
+      .end((err, res) => {
+        should.not.exist(err);
+        expect(res).to.have.status(200);
+        done();
+      });
+  });
+});

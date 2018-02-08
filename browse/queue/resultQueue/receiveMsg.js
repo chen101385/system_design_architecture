@@ -25,7 +25,7 @@ const pollQueue = (callback) => {
   
   sqs.receiveMessage(params, function(err, data) {
     if (err) {
-      console.log("Receive Error, and what an error it is!!", err);
+      console.log("Receive Error sqs.receiveMessage", err);
     } else if (data.Messages) {
       // console.log('THIS IS DATA.MESSAGES.Body', data.Messages[0].Body)
       callback(data.Messages[0].Body)
@@ -46,8 +46,8 @@ const pollQueue = (callback) => {
     }
   });
 }
-
-// pollQueue((results) => console.log(results));
+//tests results queue
+pollQueue((results) => console.log(results));
 
 module.exports = {
   pollQueue,

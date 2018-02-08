@@ -15,29 +15,22 @@ app.use(router.allowedMethods())
     .use(router.routes())
     .use(require('koa-body')());
 
-//koa body-parser middleware (converts req.body from JSON-to-code)
-//ctx.request 
-//ctx.response
+app.use(async ctx => {
+    if (ctx.url === '/events') {
+        let event = ctx.request.body;
+        db.addUserEvent(event.user_id, event.movie_id, event.algorithm_id, event.action, event.x, event.y);
 
-// app.use(async ctx => {
-//     if (ctx.url === '/events') {
-//         let event = ctx.request.body;
-//         db.addUserEvent(event.user_id, event.movie_id, event.algorithm_id, event.action, event.x, event.y);
+        ctx.response.body = 'Success: event received';
+    }
+  });
 
-//         ctx.response.body = 'Success: event received';
-//     }
-//   });
+//FOR SUPERTEST
+  router.get("/", async ctx => {
+    ctx.body = {
+      data: "Sending some JSON"
+    };
+  });
 
-// router.post(`/events`, async (ctx, next) => {
-//   const userAction = await db.
-// })
-
-
-/** route list
- * user - get: /startbrowsing/:userid
- * user - get: /browsemore/:userid
- * user -get: /seemoviemetadata/:movieid
- */
 router.get('/startbrowsing/:userid', async (ctx, next) => {
     // const getUserRecs = util.promisify(db.getUserRecs);
     // const temp = await getUserRecs(ctx.params.userid)
@@ -74,4 +67,11 @@ router.get('/browsemore/:userid', ctx => {
 })
 
 app.listen(3000, () => console.log('listening on port 3000'));
+
+/** route list
+ * user - get: /startbrowsing/:userid
+ * user - get: /browsemore/:userid
+ * user -get: /seemoviemetadata/:movieid
+ */
+
 
