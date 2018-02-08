@@ -80,13 +80,8 @@ const saveUserRecs = (list) => {
 }
 
 const getGlobalRecs = (cb) => {
-    GlobalRecs.find().exec((err, results) => {
-        if (err) {
-            cb(err);
-        } else {
-            cb(null, results);
-        }
-    })
+    //return a promise;
+    return GlobalRecs.find().exec();
 }
 
 const saveGlobalRecs = (list, callback) => {

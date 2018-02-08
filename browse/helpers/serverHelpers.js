@@ -4,7 +4,6 @@ const axios = require('axios'),
     jobQueue = require(`../queue/jobQueue/sendMsg.js`),
     resultQueue = require(`../queue/resultQueue/receiveMsg.js`);
 
-
 let eventInstance = {};
 
 const getEvent = event => {
@@ -23,19 +22,29 @@ const getEvent = event => {
 }
 
 const sendEvent = () => {
-    getEvent(eventInstance);
-    let url = `http://127.0.0.1:3000/events`
+    return new Promise((resolve, reject) => {
+        
+        getEvent(eventInstance);
+        let url = `http://127.0.0.1:3000/events`
+    
+        fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(eventInstance),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+    })
+    .then(response => {
+         console.log('this is response', response);
+         resolve(response)
+    })
+    .catch(err => {
+        console.log('this is error', err)
+        reject(err); 
+})
 
-    fetch(url, {
-        method: 'POST',
-        body: JSON.stringify(eventInstance),
-        headers: {
-            "Content-Type": "application/json"
-        }
-    });
-}
-
-const startBrowsing = (userId) => {
+const startBrowsing = async (userId) => {
     //when a user logs in, push the user's movie recommendations to the UI
     //a GET request to the database that results in a push to the UI;
     let url = `http://127.0.0.1:3000/startbrowsing/${userId}`
@@ -53,7 +62,8 @@ const startBrowsing = (userId) => {
         .then(data => {
             //What am I doing with these results?
             let movieList = data[0].movie_list;
-            console.log('this is movieList', movieList);
+            // console.log('this is movieList', movieList);
+
             fetch(`http://localhost:3000/getmany`, {
                 method: 'POST',
                 headers: {
@@ -61,7 +71,15 @@ const startBrowsing = (userId) => {
                     "data": JSON.stringify(movieList)
                 }
             })
-            //take metadata for movies & serve to the user;
+                //take metadata for movies & serve to the user;
+                .then(response => {
+                    // console.log('POST to /getmany SUCCESSFUL', response)
+                    return response;
+                })
+                .catch(err => {
+                    // console.log('POST to /getmany FAILED', err);
+                    return err;
+                })
         })
 }
 
@@ -83,5 +101,5 @@ startBrowsing(13);
 module.exports = {
     sendEvent,
     startBrowsing,
-    browseMore
+    browseMore,
 }

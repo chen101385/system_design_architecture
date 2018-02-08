@@ -7,26 +7,28 @@ AWS.config.update({region: 'us-west-2'});
 var sqs = new AWS.SQS({apiVersion: '2012-11-05'});
 
 const addUserToQueue = (userId) => {
+  return new Promise((resolve, reject) => {
 
-  const params = {
-      DelaySeconds: 1,
-      MessageAttributes: {
-       "userId": {
-         DataType: "Number",
-         StringValue: `${userId}`
+    const params = {
+        DelaySeconds: 1,
+        MessageAttributes: {
+         "userId": {
+           DataType: "Number",
+           StringValue: `${userId}`
+          }
+        },
+        MessageBody: `${userId}`,
+        QueueUrl: "https://sqs.us-west-2.amazonaws.com/361004913048/job_queue"
+       };
+    
+      sqs.sendMessage(params, function(err, data) {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(data)
         }
-      },
-      MessageBody: `${userId}`,
-      QueueUrl: "https://sqs.us-west-2.amazonaws.com/361004913048/job_queue"
-     };
-  
-    sqs.sendMessage(params, function(err, data) {
-      if (err) {
-        console.log("Error", err);
-      } else {
-        console.log("Success", data.MessageId);
-      }
-    });
+      });
+  })
 }
 
 // addUserToQueue(10);

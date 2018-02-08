@@ -27,7 +27,7 @@ const pollQueue = (callback) => {
     if (err) {
       console.log("Receive Error, and what an error it is!!", err);
     } else if (data.Messages) {
-      console.log('THIS IS DATA.MESSAGES.Body', data.Messages[0].Body)
+      // console.log('THIS IS DATA.MESSAGES.Body', data.Messages[0].Body)
       callback(data.Messages[0].Body)
         //expecting an array of movie_ids
       const deleteParams = {
