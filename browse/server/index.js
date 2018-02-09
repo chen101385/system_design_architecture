@@ -6,7 +6,8 @@ const Koa = require('koa'),
     db = require('../database'),
     axios = require('axios'),
     util = require('util'),
-    babelCore = require('babel-core/register');
+    babelCore = require('babel-core/register'),
+    redis = require('../helpers/redisHelpers.js');
 
 const app = new Koa(),
     router = new Router();
@@ -22,26 +23,34 @@ app.use(async ctx => {
 
         ctx.response.body = 'Success: event received';
     }
-  });
+});
 
 //FOR SUPERTEST
-  router.get("/", async ctx => {
+router.get("/", async ctx => {
     ctx.body = {
-      data: "Sending some JSON"
+        data: "Sending some JSON"
     };
-  });
+});
 
-router.get('/startbrowsing/:userid', async (ctx, next) => {
+router.get('/startbrowsing/:userid', async ctx => {
     // const getUserRecs = util.promisify(db.getUserRecs);
     // const temp = await getUserRecs(ctx.params.userid)
+    let movieIds;
     try {
-        const movieIds = await db.getUserRecs(ctx.params.userid);
+        if (await redis.existAsync(ctx.params.userid)) {
+            console.log('redis is working!');
+            movieIds = await redis.getAsync(ctx.params.userid);
+        } else {
+            console.log('redis is NOT working');
+            movieIds = await db.getUserRecs(ctx.params.userid);
+            redis.setAsync(ctx.params.userid, JSON.stringify(movieIds));
+            redis.expireAsync(ctx.params.userid, 600);
+        }
+        ctx.response.status = 200;
         ctx.response.body = JSON.stringify(movieIds);
-        next();
-    } catch(err) {
+    } catch (err) {
         console.log('/startbrowsing route ERROR!', err);
         ctx.response.body = err;
-        next();
     }
 })
 

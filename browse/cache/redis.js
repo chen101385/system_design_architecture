@@ -1,19 +1,20 @@
-var redisClient = require('redis').createClient;
-var redis = redisClient(6379, 'localhost');
+const redisClient = require('redis').createClient,
+    redis = redisClient(6379, 'localhost'),
+    db = require('../database');
 
-module.exports.findBookByTitleCached = function (db, redis, title, callback) {
+//I want this method to retrieve the data from the cache, if it exists, and check the database afterwards.  
+const findUserList = (db, redis, title, callback) => {
     redis.get(title, function (err, reply) {
         if (err) callback(null);
         else if (reply) //Book exists in cache
-        callback(JSON.parse(reply));
+            callback(JSON.parse(reply));
         else {
             //Book doesn't exist in cache - we need to query the main database
             db.collection('text').findOne({
                 title: title
             }, function (err, doc) {
                 if (err || !doc) callback(null);
-                else {\\Book found in database, save to cache and
-                    return to client
+                else {
                     redis.set(title, JSON.stringify(doc), function () {
                         callback(doc);
                     });
@@ -23,22 +24,24 @@ module.exports.findBookByTitleCached = function (db, redis, title, callback) {
     });
 };
 
-module.exports.access.updateBookByTitle = function (db, redis, title, newText, callback) {
-    db.collection("text").findAndModify({
-        title: title
-    }, {
-        $set: {
-            text: text
-        }
-    }, function (err, doc) { //Update the main database
-        if (err) callback(err);
-        else if (!doc) callback('Missing book');
-        else {
-            //Save new book version to cache
-            redis.set(title, JSON.stringify(doc), function (err) {
-                if (err) callback(err);
-                else callback(null);
-            });
-        }
+const storeUserList = (db, redis, userId, callback) => {
+    return new Promise((resolve, reject) => {
+        return db.getUserRecs(userId)
+    })
+    .then((data) => {
+      redis.set(userId.toString(), JSON.stringify(data), (err) => {
+        if (err) reject('storeUserList errored!', err)
+        else resolve(null);
+      }) 
     });
 };
+
+storeUserList(db, redis, 10, (err) => {
+    if (err) console.log('storeUserList ERRORED', err);
+    else (console.log('storeUserList WORKED!'))
+})
+
+module.exports = {
+    findUserList,
+    storeUserList,
+}

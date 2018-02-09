@@ -6,11 +6,7 @@ config:
   phases:
   #duration of test in SECONDS
     - duration: 60
-      arrivalRate: 5
-    - duration: 60
-      arrivalRate: 10
-    - duration: 60
-      arrivalRate: 15
+      arrivalRate: 500
   defaults:
     headers:
     #default setting from documentation, can copy directly
@@ -19,4 +15,4 @@ scenarios:
   - flow:
     - get:
     #URL you choose to test; can be API or SQS, I believe.
-        url: "/startbrowsing/1"
+        url: "/startbrowsing/101"

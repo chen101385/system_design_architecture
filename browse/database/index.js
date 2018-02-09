@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const mongoose = require('mongoose'),
+Schema = mongoose.Schema;
 
 
 mongoose.connect('mongodb://localhost/browse');
@@ -54,13 +54,16 @@ const userInteractionSchema = mongoose.Schema({
     y: Number,
     timestamp: Date
 })
+
 //user recs model;
 const UserRecs = mongoose.model('userRecs', userMovieListSchema);
+
 const UserRecIds = mongoose.model('userRecIds', userMovieIdListSchema);
 //global recs model;
 const GlobalRecs = mongoose.model('globalRecs', globalMovieListSchema);
 
 const UserInteraction = mongoose.model('userInteractions', userInteractionSchema);
+
 
 const sendUserBatch = (cb) => {
     UserInteraction.find().sort().limit(100).exec(cb);
@@ -73,10 +76,9 @@ const getUserRecs = (userId, cb) => {
 
 
 const saveUserRecs = (list) => {
-  //TBD: what is the shape of the list data?
     let newUserList = new UserRecs(list);
 
-    return newList.save().exec()
+    return newUserList.save().exec()
 }
 
 const getGlobalRecs = (cb) => {
@@ -107,7 +109,6 @@ const saveGlobalRecs = (list, callback) => {
 //         console.log(results);
 //     }
 // })
-
 
 module.exports = {
     getUserRecs,

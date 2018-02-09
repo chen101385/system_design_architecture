@@ -41,6 +41,7 @@
     "newrelic": "^2.7.0",
     "node-fetch": "^2.0.0",
     "redis": "^2.8.0",
+    "util": "^0.10.3",
     "uuid-v4": "^0.1.0"
   },
   "devDependencies": {
