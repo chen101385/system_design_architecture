@@ -25,13 +25,6 @@ app.use(async ctx => {
     }
 });
 
-//FOR SUPERTEST
-router.get("/", async ctx => {
-    ctx.body = {
-        data: "Sending some JSON"
-    };
-});
-
 router.get('/startbrowsing/:userid', async ctx => {
     // const getUserRecs = util.promisify(db.getUserRecs);
     // const temp = await getUserRecs(ctx.params.userid)
@@ -54,13 +47,13 @@ router.get('/startbrowsing/:userid', async ctx => {
     }
 })
 
-router.get('/getmovies', async (ctx, next) => {
-    //receive movie metadata from movie service
+router.post('/getmany', async (ctx, next) => {
+    //receive movie metadata from movie service via POST request
     //replace movie list for user;
-    //movie meta-data will be in ctx.request.body
+    //movie meta-data will be in ctx.request.body;
     let movieMeta = ctx.request.body;
-    //create a function to add user_id's movielist to DB
-
+    //PASS movieMeta to the UI;
+    
     ctx.response.body = 'Success: movie meta-data received';
     next();
 })
@@ -75,7 +68,7 @@ router.get('/browsemore/:userid', ctx => {
     //once I receive movie metadata, i'll post it to the client;
 })
 
-app.listen(3000, () => console.log('listening on port 3000'));
+app.listen(8080, () => console.log('listening on port 8080'));
 
 /** route list
  * user - get: /startbrowsing/:userid

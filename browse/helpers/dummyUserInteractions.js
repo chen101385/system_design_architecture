@@ -1,5 +1,5 @@
-const fs = require('fs');
-const createCsvWriter = require('csv-writer').createObjectCsvWriter;
+const fs = require('fs'),
+    createCsvWriter = require('csv-writer').createObjectCsvWriter;
 
 const randomDate = (start, end) => {
     return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
@@ -39,7 +39,7 @@ const userDataGenerator = async () => {
                     return "down";
                 }
             };
-        
+
             let obj = {};
             obj.user_id = Math.floor(Math.random() * 100000);
             obj.movie_id = Math.floor(Math.random() * 10000);
@@ -50,7 +50,7 @@ const userDataGenerator = async () => {
                 obj.y = Math.floor(Math.random() * 20) - 10;
             } else {
                 obj.x = null;
-                obj.y = null; 
+                obj.y = null;
             }
             obj.timestamp = randomDate(new Date(2017, 11, 1), new Date(2018, 2, 1));
 

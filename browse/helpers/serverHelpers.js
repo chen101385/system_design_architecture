@@ -62,7 +62,7 @@ const startBrowsing = async (userId) => {
             let movieList = data[0].movie_list;
             // console.log('this is movieList', movieList);
 
-            fetch(`http://localhost:3000/getmany`, {
+            fetch(`http://34.212.83.116:80/getmany`, {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json",

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose'),
-Schema = mongoose.Schema;
+    Schema = mongoose.Schema;
 
 
 mongoose.connect('mongodb://localhost/browse');
@@ -7,7 +7,8 @@ mongoose.connect('mongodb://localhost/browse');
 const userMovieListSchema = mongoose.Schema({
     user_id: Number,
     algo_id: Number,
-    movie_list: [{
+    movie_list:  
+[{
         Movie_id: Number,
         Title: String,
         Category: String,
@@ -55,15 +56,10 @@ const userInteractionSchema = mongoose.Schema({
     timestamp: Date
 })
 
-//user recs model;
-const UserRecs = mongoose.model('userRecs', userMovieListSchema);
-
-const UserRecIds = mongoose.model('userRecIds', userMovieIdListSchema);
-//global recs model;
-const GlobalRecs = mongoose.model('globalRecs', globalMovieListSchema);
-
-const UserInteraction = mongoose.model('userInteractions', userInteractionSchema);
-
+const UserRecs = mongoose.model('userRecs', userMovieListSchema),
+    UserRecIds = mongoose.model('userRecIds', userMovieIdListSchema),
+    GlobalRecs = mongoose.model('globalRecs', globalMovieListSchema),
+    UserInteraction = mongoose.model('userInteractions', userInteractionSchema);
 
 const sendUserBatch = (cb) => {
     UserInteraction.find().sort().limit(100).exec(cb);
@@ -74,46 +70,48 @@ const getUserRecs = (userId, cb) => {
     return UserRecIds.find({ user_id: userId }).limit(1).exec();
 }
 
-
 const saveUserRecs = (list) => {
     let newUserList = new UserRecs(list);
-
-    return newUserList.save().exec()
+    //returns a promise;
+    return newUserList.save().exec();
 }
 
-const getGlobalRecs = (cb) => {
-    //return a promise;
-    return GlobalRecs.find().exec();
+module.exports = {
+    getUserRecs,
+    // getGlobalRecs,
+    saveUserRecs,
+    // saveGlobalRecs,
+    sendUserBatch
 }
 
-const saveGlobalRecs = (list, callback) => {
 
-    let newList = new GlobalRecs(list);
 
-    newList.save((err, list) => {
-        if (err) {
-            console.log(err);
-        } else {
-            callback(null, list);
-        }
-    })
-}
 
 //CLEAR DB CODE
 // UserRecs.find().remove().exec()
 
-// getUserRecs(10, (err, results) => {
-//     if (err) {
-//         console.log(err);
-//     } else {
-//         console.log(results);
-//     }
-// })
+//UNUSED FUNCTIONS 
 
-module.exports = {
-    getUserRecs,
-    getGlobalRecs,
-    saveUserRecs,
-    saveGlobalRecs,
-    sendUserBatch
-}
+// const saveUserRecs = (list) => {
+//     let newUserList = new UserRecs(list);
+
+//     return newUserList.save().exec()
+// }
+
+// const getGlobalRecs = (cb) => {
+//     //return a promise;
+//     return GlobalRecs.find().exec();
+// }
+
+// const saveGlobalRecs = (list, callback) => {
+
+//     let newList = new GlobalRecs(list);
+
+//     newList.save((err, list) => {
+//         if (err) {
+//             console.log(err);
+//         } else {
+//             callback(null, list);
+//         }
+//     })
+// }

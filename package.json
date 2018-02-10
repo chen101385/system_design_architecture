@@ -32,7 +32,7 @@
     "chai-http": "^3.0.0",
     "csv-writer": "0.0.3",
     "faker": "^4.1.0",
-    "jest": "^22.2.1",
+    "fs": "0.0.1-security",
     "koa": "^2.4.1",
     "koa-body": "^2.5.0",
     "koa-router": "^7.4.0",
@@ -47,7 +47,6 @@
   "devDependencies": {
     "babel-plugin-transform-async-to-generator": "^6.24.1",
     "babel-preset-env": "^1.6.1",
-    "babel-register": "^6.26.0",
-    "supertest": "^3.0.0"
+    "babel-register": "^6.26.0"
   }
 }
