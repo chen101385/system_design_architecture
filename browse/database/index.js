@@ -2,7 +2,7 @@ const mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 
-mongoose.connect('mongodb://localhost/browse');
+mongoose.connect('mongodb://54.191.69.185:8080/browse');
 
 const userMovieListSchema = mongoose.Schema({
     user_id: Number,

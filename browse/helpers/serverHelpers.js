@@ -45,7 +45,7 @@ const sendEvent = () => {
 const startBrowsing = async (userId) => {
     //when a user logs in, push the user's movie recommendations to the UI
     //a GET request to the database that results in a push to the UI;
-    let url = `http://127.0.0.1:3000/startbrowsing/${userId}`
+    let url = `http://54.191.69.185:8080/startbrowsing/${userId}`
 
     fetch(url, {
         method: 'GET',
@@ -60,7 +60,7 @@ const startBrowsing = async (userId) => {
         .then(data => {
             //What am I doing with these results?
             let movieList = data[0].movie_list;
-            // console.log('this is movieList', movieList);
+            console.log('this is movieList', movieList);
 
             fetch(`http://34.212.83.116:80/getmany`, {
                 method: 'POST',
@@ -94,7 +94,7 @@ const browseMore = async (userId) => {
     // serves up the package of new rec movies & metadata to the user
 }
 
-// startBrowsing(13);
+startBrowsing(13);
 // sendEvent();
 
 module.exports = {
