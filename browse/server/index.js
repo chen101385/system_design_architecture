@@ -68,7 +68,7 @@ router.get('/browsemore/:userid', ctx => {
     //once I receive movie metadata, i'll post it to the client;
 })
 
-app.listen(8080, () => console.log('listening on port 8080'));
+app.listen(80, () => console.log('listening on port 8080'));
 
 /** route list
  * user - get: /startbrowsing/:userid
