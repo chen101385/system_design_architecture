@@ -24,7 +24,7 @@ const getEvent = event => {
 const sendEvent = () => {
 
     getEvent(eventInstance);
-
+    //get this later
     let url = `http://127.0.0.1:3000/events`
 
     fetch(url, {
@@ -45,7 +45,7 @@ const sendEvent = () => {
 const startBrowsing = async (userId) => {
     //when a user logs in, push the user's movie recommendations to the UI
     //a GET request to the database that results in a push to the UI;
-    let url = `http://34.212.83.116:80/startbrowsing/${userId}`
+    let url = `http://34.212.83.116:8080/startbrowsing/${userId}`
 
     fetch(url, {
         method: 'GET',
@@ -62,7 +62,7 @@ const startBrowsing = async (userId) => {
             let movieList = data[0].movie_list;
             console.log('this is movieList', movieList);
 
-            fetch(`http://34.212.83.116:80/getmany`, {
+            fetch(`http://34.212.83.116:8080/getmany`, {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json",
