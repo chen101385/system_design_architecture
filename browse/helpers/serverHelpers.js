@@ -45,7 +45,7 @@ const sendEvent = () => {
 const startBrowsing = async (userId) => {
     //when a user logs in, push the user's movie recommendations to the UI
     //a GET request to the database that results in a push to the UI;
-    let url = `http://54.191.69.185:8080/startbrowsing/${userId}`
+    let url = `http://localhost:8080/startbrowsing/${userId}`
 
     fetch(url, {
         method: 'GET',
