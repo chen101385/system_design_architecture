@@ -6,7 +6,7 @@ config:
   phases:
   #duration of test in SECONDS
     - duration: 60
-      arrivalRate: 500
+      arrivalRate: 425
   defaults:
     headers:
     #default setting from documentation, can copy directly
