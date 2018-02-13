@@ -1,12 +1,12 @@
 config:
-  target: 'http://127.0.0.1:3000'
+  target: 'http://34.212.83.116:8080'
   http:
     #10 minutes threshold for request timeout 
     timeout: 60
   phases:
   #duration of test in SECONDS
     - duration: 60
-      arrivalRate: 500
+      arrivalRate: 440
   defaults:
     headers:
     #default setting from documentation, can copy directly
