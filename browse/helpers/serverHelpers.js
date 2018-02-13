@@ -24,7 +24,7 @@ const getEvent = event => {
 const sendEvent = () => {
 
     getEvent(eventInstance);
-    //get this later
+    //GET SAM's EC2 IP;
     let url = `http://127.0.0.1:3000/events`
 
     fetch(url, {
