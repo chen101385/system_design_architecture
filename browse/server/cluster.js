@@ -3,7 +3,8 @@ const express = require('express'),
     cluster = require('cluster'),
     util = require('util'),
     bodyParser = require('body-parser'),
-    db = require('../database');
+    db = require('../database'),
+    redis = require('../helpers/redisHelpers.js');
 
 if (cluster.isMaster) {
     var numWorkers = require('os').cpus().length;
