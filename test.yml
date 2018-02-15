@@ -1,5 +1,5 @@
 config:
-  target: 'http://34.217.145.56:3000'
+  target: 'http://34.217.145.56:8000'
   http:
     #10 minutes threshold for request timeout 
     timeout: 60
