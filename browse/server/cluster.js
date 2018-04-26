@@ -7,11 +7,11 @@ const express = require('express'),
     redis = require('../helpers/redisHelpers.js');
 
 if (cluster.isMaster) {
-    var numWorkers = require('os').cpus().length;
+    const numWorkers = require('os').cpus().length;
 
     console.log('Master cluster setting up ' + numWorkers + ' workers...');
 
-    for (var i = 0; i < numWorkers; i++) {
+    for (let i = 0; i < numWorkers; i++) {
         cluster.fork();
     }
 
